@@ -12,7 +12,6 @@ def main():
 
     num_workers = arg_parser.parse_int('num_workers', 1)
     assert(num_workers > 0)
-	
     if (num_workers > 1):
         Logger.print('Running with {:d} workers'.format(num_workers))
         cmd = 'mpiexec -n {:d} python3 DeepMimic_Optimizer.py '.format(num_workers)

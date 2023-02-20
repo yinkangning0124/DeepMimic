@@ -12,18 +12,22 @@ MKDIR = mkdir -p
 # export FREEGLUT_INC_DIR = third/freeglut-3.0.0/install/include/
 # export FREEGLUT_LIB_DIR = third/freeglut-3.0.0/install/lib
 
-PYTHON_INC = /usr/include/python3.6m
-PYTHON_LIB = /usr/lib/ -lpython3.6m
+PYTHON_INC = /home/kangning/anaconda3/envs/motion/include/python3.8
+PYTHON_LIB = /home/kangning/anaconda3/envs/motion/lib/python3.8
+
+EIGEN_DIR = /usr/local/include/eigen3
+BULLET_INC_DIR = /usr/local/include/bullet
 
 INC = -I./ \
 	-I$(EIGEN_DIR) \
 	-I$(BULLET_INC_DIR) \
 	-I$(GLEW_INC_DIR) \
-	-I$(FREEGLUT_INC_DIR) \
-	-I$(BULLET_INC_DIR)
+    -I$(FREEGLUT_INC_DIR) \
+    -I$(BULLET_INC_DIR)
 
 LIBDIRS = -L$(GLEW_LIB_DIR) -L$(FREEGLUT_LIB_DIR) -L$(BULLET_LIB_DIR)
 LIBS = -lGLEW -lGL -lGLU -lglut -lBulletDynamics -lBulletCollision -lLinearMath -lm -lstdc++
+#IBS = -L$(BULLET_LIB_DIR) -lGLEW -lGL -lGLU -lglut -lBulletDynamics -lBulletCollision -lLinearMath -lm -lstdc++
 
 CC = clang++
 CFLAGS = -std=c++11 -O3 -Wall -fPIC 
@@ -54,7 +58,7 @@ print:
 python: $(OUT_DIRS) $(OBJ)
 	swig -c++ -python DeepMimicCore.i
 	$(CC) -c -g $(CFLAGS) $(INC) $(LIBS) DeepMimicCore.cpp DeepMimicCore_wrap.cxx -I$(PYTHON_INC)
-	$(CC) -shared $(CFLAGS) $(OBJ) $(LIBS) DeepMimicCore_wrap.o -o _DeepMimicCore.so -L$(PYTHON_LIB) $(LIBDIRS)
+	$(CC) -shared $(CFLAGS) $(OBJ) $(LIBS) DeepMimicCore_wrap.o -o _DeepMimicCore.so -L$(PYTHON_LIB)
 
 $(OBJ_DIR)/%.o: %.cpp
 	$(CC) -c -g $(CFLAGS) $(INC) -o $@ $<
